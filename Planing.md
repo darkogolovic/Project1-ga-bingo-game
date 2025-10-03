@@ -36,3 +36,6 @@ End the game
 If 35 draws are completed and the player does not have all 6 hits:
     * Player loses
     * Show result and option to start a new game
+
+
+![Plan](IMG_20251003_113648.jpg)
