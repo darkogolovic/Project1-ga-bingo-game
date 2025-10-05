@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="app.js"></script>
+    
+    <script  defer type="module" src="./scripts/app.js"></script>
     <script
       src="https://kit.fontawesome.com/de7d19d756.js"
       crossorigin="anonymous"
@@ -21,15 +22,21 @@
     <main>
       <aside>
         <div>
-          <h2>My tickets</h2>
+          <h2>Saldo:</h2>
+          <p> 1 2 3 4 5 6</p>
+          <button>Confirm</button>
+
         </div>
+        <button>Start game</button>
+        <button>Reset</button>
+        <h4>Active tickets</h4>
       </aside>
 
       <section class="main-content">
         <div class="drum-container">
           <div class='first-five'>
             <div class="ball ball-1">
-              <img data-index="1" src="/Images/Basic.png" alt="" />
+              <img data-index="1" src="/Images/Yellow-25.png" alt="" />
             </div>
             <div class="ball ball-2">
               <img data-index="2" src="/Images/Basic.png" alt="" />
@@ -53,7 +60,20 @@
           
           
         </div>
-        <div class="numbers"></div>
+        <div class="selection">
+          <button class="random-btn">RANDOM PICK</button>
+          <div class="pick-by-color">
+            <h3>Pick by color:</h4>
+            <div class="colors">
+
+            </div>
+          </div>
+          <div class="pick-by-numbers">
+              <h3>Pick your numbers here: ⬇️⬇️⬇️</h3>
+              <div class="numbers"></div>
+          </div>
+          
+        </div>
       </section>
     </main>
   </body>

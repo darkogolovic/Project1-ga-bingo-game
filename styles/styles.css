@@ -13,8 +13,7 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid white;
+    padding: 0.5rem 2rem;
     margin-bottom: 1rem;
 }
 .info-icon{
@@ -38,7 +37,12 @@ aside{
 .drum-container{
    display: flex;
    justify-content: space-around;
-   gap: 2rem;
+   gap: 1.5rem;
+   background: rgba(0, 0, 0, 0.195);
+   box-shadow: 10px 5px 5px rgb(2, 2, 82);
+   border-radius: 2%;
+   margin-bottom: 1rem;
+   padding: 0.5rem;
 }
 .first-five{
     display: flex;
@@ -58,7 +62,7 @@ aside{
     grid-column: 4;
 }
 .animation{
-    width: 29%;
+    width: 25%;
     grid-column: 1 / 3;
     grid-row: 2/6;
     border: 1px solid black;
@@ -71,8 +75,67 @@ aside{
 .balls-holder{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(7,1fr);
+    grid-template-columns: repeat(6,1fr);
     justify-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
+}
+.selection{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+.pick-by-numbers{
+    width: 60%;
+   
+}
+.selection h3{
+    margin-bottom: 1rem;
+}
+.pick-by-color{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.numbers{
+    width: 100%;
+    display:grid;
+    grid-template-columns: repeat(8,1fr);
+    justify-items: start;
+    align-items: center;
+
+}
+
+.number{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
+
+.colors{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.color{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border :2px solid white;
+}
+.random-btn{
+    width: 20%;
+    padding: 1rem;
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
 }
 
