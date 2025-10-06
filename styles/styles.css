@@ -57,7 +57,7 @@ main{
 }
 aside{
     width: 20%;
-    border: 1px solid white;
+    box-shadow: 10px 5px 5px 10px rgb(2, 2, 82);
     height: 88vh;
 }
 aside h2{
