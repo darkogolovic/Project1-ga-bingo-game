@@ -55,6 +55,8 @@ colors.forEach(color=>{
 
 //ticket selection
 const selectionNumbers = document.querySelectorAll('.number')
+const pickByColorElements = document.querySelectorAll('.color')
+
 
 function selectNumbers(e){
     if(ticket.length < ticketLength){
@@ -86,6 +88,37 @@ function randomSelection(){
 
 }
 
+function selectByColor(e){
+    selectionNumbers.forEach(num=>{
+        if(ticket.length===0){
+            if(num.dataset.color===e.target.style.backgroundColor){
+            num.classList.add(e.target.style.backgroundColor)
+            ticket.push(num.innerHTML)
+            let liElement = document.createElement('li')
+            liElement.innerHTML= num.innerHTML
+            ticketElement.appendChild(liElement)
+            startGameBtn.removeAttribute('disabled')
+            }
+        }else if(ticket.length > 0 && ticket.length < ticketLength){
+            
+            
+            if(num.dataset.color===e.target.style.backgroundColor){
+            num.classList.add(e.target.style.backgroundColor)
+            ticket.push(num.innerHTML)
+            let liElement = document.createElement('li')
+            liElement.innerHTML= num.innerHTML
+            ticketElement.appendChild(liElement)
+            startGameBtn.removeAttribute('disabled')
+            
+            
+            }
+        }
+    })
+   
+}
+
+
+//clear selection
 function clearSelection(){
     ticket.splice(0,ticket.length)
     selectionNumbers.forEach(num=> num.classList.remove(num.dataset.color))
@@ -117,7 +150,7 @@ function startGame(){
         if(!drawnNumbers.includes(drawnNumber)){ 
             drawnNumbers.push(drawnNumber)
             ballElementImages[counter].src= `/Images/${randomBall.color.charAt(0).toUpperCase()+randomBall.color.slice(1)}-${drawnNumber}.png` 
-            
+            console.log(drawnNumber)
             
             
             ticketLiElements.forEach(li=>{
@@ -130,11 +163,15 @@ function startGame(){
       
         if(counter === numbersToDraw){
             clearInterval(drawing);
-            console.log(drawnNumbers)
+            
         }  
 
-    },200)
+    },500)
     
+}
+
+function endGame(){
+
 }
 
 
@@ -147,6 +184,10 @@ selectionNumbers.forEach(num=>{
 clearSelectionBtn.addEventListener('click',clearSelection)
 randomNumbersPick.addEventListener('click',randomSelection)
 startGameBtn.addEventListener('click',startGame)
+pickByColorElements.forEach(el=>{
+    el.addEventListener('click',selectByColor)
+}) 
+
 
 
 

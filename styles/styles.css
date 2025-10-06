@@ -16,7 +16,7 @@
 .red{
     background-color: red;
 }
-.braon{
+.brown{
     background-color: brown;
 }
 .orange{
@@ -98,6 +98,7 @@ aside button{
    border-radius: 2%;
    margin-bottom: 1rem;
    padding: 0.5rem;
+   
 }
 .first-five{
     display: flex;
