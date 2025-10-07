@@ -36,6 +36,37 @@ body{
     height: 100vh;
    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 84%);
    color: white;
+   
+}
+.modal-result{
+    display: none;
+    width: 80%;
+    height: 70vh;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    background-color:rgba(102, 101, 101, 0.822);
+    font-size: 3rem;
+    font-weight: bold;
+    z-index: 1;
+    color: rgb(234, 229, 229);
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.modal-result button{
+    position:absolute;
+    top: 10px;
+    right: 10px;
+    width: 5%;
+    border: 1px solid black;
+    box-shadow: 1px 1px 1px 1px rgb(2, 2, 82);
+
+}
+
+.result{
+    
+   
 }
 header{
     width: 100%;
@@ -54,6 +85,7 @@ main{
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
+    position: relative;
 }
 aside{
     width: 20%;
@@ -141,7 +173,6 @@ aside button{
     position: absolute;
     top: 30px;
     left: 30px;
-   
     transition: all 0.5s;
 }
 

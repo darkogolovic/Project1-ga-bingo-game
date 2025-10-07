@@ -3,6 +3,7 @@ import { multipliers } from "./multipliers.js";
 import { allBalls } from "./balls.js";
 
 //Elements selectors
+const bodyElement=document.querySelector('body')
 const ballsHolder = document.querySelector(".balls-holder");
 const numbers = document.querySelector(".numbers");
 const colorsElement = document.querySelector(".colors");
@@ -11,6 +12,8 @@ const clearSelectionBtn = document.querySelector("#clear-button");
 const randomNumbersPick = document.querySelector("#random-pick");
 const startGameBtn = document.querySelector("#start-game");
 const mainBall = document.querySelector(".main-ball");
+const modalResultElement= document.querySelector('.modal-result')
+const resultElement = document.querySelector('.result')
 
 //consts
 
@@ -18,17 +21,19 @@ const ticket = [];
 const ticketLength = 6;
 const numbersToDraw = 35;
 const drawnNumbers = [];
+let winMultiplier = 0;
 
 //HTML generate
 multipliers.forEach((multiplier, index) => {
   let el = `
-    <div class= 'ball'>
-    <img data-index = ${index + 6} src = 'Images/Basic.png' alt =''/>
-    <span>x${multiplier}</span>
+    <div class= 'ball' data-multiplier=${multiplier}>
+    <img  data-index = ${index + 6} src = 'Images/Basic.png' alt =''/>
+    <span>x</span><span >${multiplier}</span>
     
     </div>`;
   ballsHolder.innerHTML += el;
 });
+
 
 allBalls.forEach((ball) => {
   let el = `
@@ -50,6 +55,8 @@ colors.forEach((color) => {
     `;
   colorsElement.innerHTML += el;
 });
+
+
 
 //ticket selection
 const selectionNumbers = document.querySelectorAll(".number");
@@ -116,14 +123,18 @@ function clearSelection() {
 
 //start game
 const ballElementImages = document.querySelectorAll(".ball img");
+const ballElements=document.querySelectorAll('ball')
 
-console.log(ballElementImages);
+
+
 
 function startGame() {
   const ticketLiElements = document.querySelectorAll(".ticket li");
   let counter = 0;
+  let winCounter = 0;
 
   startGameBtn.setAttribute("disabled", true);
+  
 
   let drawing = setInterval(() => {
     mainBall.style.opacity = 1;
@@ -131,7 +142,9 @@ function startGame() {
     let randomBallIndex = Math.floor(Math.random() * allBalls.length);
     let randomBall = allBalls[randomBallIndex];
     let drawnNumber = randomBall.number;
+
     if (!drawnNumbers.includes(drawnNumber)) {
+        
       drawnNumbers.push(drawnNumber);
       mainBall.setAttribute("src", `images/${randomBall.image}`);
       mainBall.style.width = "80%";
@@ -142,6 +155,12 @@ function startGame() {
       ticketLiElements.forEach((li) => {
         if (drawnNumber === parseInt(li.innerHTML)) {
           li.style.backgroundColor = "green";
+          winCounter++;
+          if(winCounter === 6){
+           winMultiplier = multipliers[drawnNumbers.length - 6];
+           console.log(winMultiplier)
+          }
+          
         }
       });
       counter++;
@@ -152,13 +171,26 @@ function startGame() {
       mainBall.style.width = "0";
       if (counter === numbersToDraw) {
         clearInterval(drawing);
-        endGame();
+        endGame(winMultiplier);
       }
-    }, 600);
-  }, 1000);
+    }, 1);
+  }, 100);
 }
 
-function endGame() {}
+function endGame(winMultiplier) {
+    setTimeout(()=>{
+        modalResultElement.style.display='flex'
+       if(winMultiplier){
+        
+        resultElement.innerHTML= `You win ${winMultiplier}`
+        
+    }else{
+        resultElement.innerHTML= 'You loose'
+       
+    }
+    },1000)
+    
+}
 
 //Event listeners
 selectionNumbers.forEach((num) => {
