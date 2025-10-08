@@ -203,8 +203,8 @@ function startGame() {
         clearInterval(drawing);
         endGame(winMultiplier);
       }
-    }, 200);
-  }, 500);
+    }, 600);
+  }, 1000);
 }
 
 function endGame(winMultiplier) {
