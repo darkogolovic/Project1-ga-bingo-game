@@ -21,10 +21,16 @@
 
     <main>
       <div class="modal-result">
-        <button>❌</button>
         <div class="result"></div>
       </div>
       <aside>
+        <div class="amount-holder">
+          <p>Amount: <span class="amount">10.00💲</span></p>
+          <div class="bet-amount-holder">
+            <input type="number"  id="bet-amount" value="0.5" min="0.5" disabled step="0.5">
+            <button id="set-amount-btn" disabled>Set bet amount</button>
+          </div>
+        </div>
         <div>
           <h2>My ticket</h2>
           <ul class="ticket">

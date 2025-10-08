@@ -3,7 +3,6 @@ import { multipliers } from "./multipliers.js";
 import { allBalls } from "./balls.js";
 
 //Elements selectors
-const bodyElement=document.querySelector('body')
 const ballsHolder = document.querySelector(".balls-holder");
 const numbers = document.querySelector(".numbers");
 const colorsElement = document.querySelector(".colors");
@@ -14,21 +13,30 @@ const startGameBtn = document.querySelector("#start-game");
 const mainBall = document.querySelector(".main-ball");
 const modalResultElement= document.querySelector('.modal-result')
 const resultElement = document.querySelector('.result')
+const amountElement = document.querySelector('.amount')
+const setAmountButton = document.querySelector('#set-amount-btn')
+const betAmountInput = document.querySelector('#bet-amount')
 
-//consts
+
+//consts and variables
 
 const ticket = [];
 const ticketLength = 6;
 const numbersToDraw = 35;
 const drawnNumbers = [];
 let winMultiplier = 0;
+let amount =10;
+let betAmount = 0;
+
 
 //HTML generate
+betAmountInput.setAttribute('max',amount)
+
 multipliers.forEach((multiplier, index) => {
   let el = `
-    <div class= 'ball' data-multiplier=${multiplier}>
+    <div class= 'ball'>
     <img  data-index = ${index + 6} src = 'Images/Basic.png' alt =''/>
-    <span>x</span><span >${multiplier}</span>
+    <span>x<span>${multiplier}</span></span>
     
     </div>`;
   ballsHolder.innerHTML += el;
@@ -58,6 +66,10 @@ colors.forEach((color) => {
 
 
 
+
+
+
+
 //ticket selection
 const selectionNumbers = document.querySelectorAll(".number");
 const pickByColorElements = document.querySelectorAll(".color");
@@ -77,7 +89,6 @@ function selectNumbers(e) {
 function randomSelection() {
   clearSelection();
   for (let i = 0; i < ticketLength; i++) {
-    let randomSelection;
     let selectedIndex = Math.floor(Math.random() * selectionNumbers.length);
     let selectedNumber = selectionNumbers[selectedIndex];
     ticket.push(selectedNumber.innerHTML);
@@ -86,7 +97,8 @@ function randomSelection() {
     ticketElement.appendChild(liElement);
     selectedNumber.classList.add(selectedNumber.dataset.color);
   }
-  startGameBtn.removeAttribute("disabled");
+  betAmountInput.removeAttribute("disabled");
+  setAmountButton.removeAttribute('disabled')
 }
 
 function selectByColor(e) {
@@ -98,7 +110,8 @@ function selectByColor(e) {
         let liElement = document.createElement("li");
         liElement.innerHTML = num.innerHTML;
         ticketElement.appendChild(liElement);
-        startGameBtn.removeAttribute("disabled");
+        betAmountInput.removeAttribute("disabled");
+        setAmountButton.removeAttribute('disabled')
       }
     } else if (ticket.length > 0 && ticket.length < ticketLength) {
       if (num.dataset.color === e.target.style.backgroundColor) {
@@ -107,7 +120,8 @@ function selectByColor(e) {
         let liElement = document.createElement("li");
         liElement.innerHTML = num.innerHTML;
         ticketElement.appendChild(liElement);
-        startGameBtn.removeAttribute("disabled");
+        betAmountInput.removeAttribute("disabled");
+        setAmountButton.removeAttribute('disabled')
       }
     }
   });
@@ -123,13 +137,20 @@ function clearSelection() {
 
 //start game
 const ballElementImages = document.querySelectorAll(".ball img");
-const ballElements=document.querySelectorAll('ball')
-
-
 
 
 function startGame() {
+  
+ 
+  drawnNumbers.length = 0;
+  winMultiplier = 0;
+  mainBall.style.opacity = 0;
+  mainBall.style.width = "0";
+  ballElementImages.forEach(el => el.setAttribute('src', 'images/Basic.png'));
+
   const ticketLiElements = document.querySelectorAll(".ticket li");
+  ticketLiElements.forEach(li => li.style.backgroundColor = "");
+
   let counter = 0;
   let winCounter = 0;
 
@@ -173,23 +194,45 @@ function startGame() {
         clearInterval(drawing);
         endGame(winMultiplier);
       }
-    }, 1);
-  }, 100);
+    }, 500);
+  }, 1000);
 }
 
 function endGame(winMultiplier) {
+  let win = betAmount*winMultiplier;
     setTimeout(()=>{
         modalResultElement.style.display='flex'
        if(winMultiplier){
-        
-        resultElement.innerHTML= `You win ${winMultiplier}`
+        resultElement.innerHTML= `You win ${win}💲`
+        amount= amount + win;
+        amountElement.innerHTML = `${amount.toFixed(2)}💲`;
         
     }else{
         resultElement.innerHTML= 'You loose'
-       
     }
+    clearSelection()
+
     },1000)
+    setTimeout(()=>{
+      modalResultElement.style.display='none'
+      ballElementImages.forEach(el=>{
+        el.setAttribute('src','images/Basic.png')
+      })
+      
+    },3000)
     
+}
+
+function setBetAmount(){
+  
+  betAmount=betAmountInput.value
+  startGameBtn.removeAttribute('disabled')
+  amount = amount - betAmount
+  amountElement.innerHTML= `${amount.toFixed(2)}💲`;
+  betAmountInput.setAttribute('disabled',true);
+  setAmountButton.setAttribute('disabled',true);
+  
+  
 }
 
 //Event listeners
@@ -202,3 +245,5 @@ startGameBtn.addEventListener("click", startGame);
 pickByColorElements.forEach((el) => {
   el.addEventListener("click", selectByColor);
 });
+
+setAmountButton.addEventListener('click',setBetAmount)
