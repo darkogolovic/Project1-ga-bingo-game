@@ -3,6 +3,9 @@ import { multipliers } from "./multipliers.js";
 import { allBalls } from "./balls.js";
 
 //Elements selectors
+const infoIcon= document.querySelector('.info-icon');
+const howToPlayModal = document.querySelector('.modal-how-to-play');
+const closeHowToPlayModal = document.querySelector('#close-how-to-play')
 const ballsHolder = document.querySelector(".balls-holder");
 const numbers = document.querySelector(".numbers");
 const colorsElement = document.querySelector(".colors");
@@ -16,6 +19,7 @@ const resultElement = document.querySelector('.result')
 const amountElement = document.querySelector('.amount')
 const setAmountButton = document.querySelector('#set-amount-btn')
 const betAmountInput = document.querySelector('#bet-amount')
+const resetBtn = document.querySelector('#reset-btn')
 
 
 //consts and variables
@@ -235,6 +239,11 @@ function setBetAmount(){
   
 }
 
+function resetGame(){
+  amount=10;
+  amountElement.innerHTML= `${amount.toFixed(2)} 💲`
+}
+
 //Event listeners
 selectionNumbers.forEach((num) => {
   num.addEventListener("click", selectNumbers);
@@ -247,3 +256,11 @@ pickByColorElements.forEach((el) => {
 });
 
 setAmountButton.addEventListener('click',setBetAmount)
+resetBtn.addEventListener('click',resetGame);
+infoIcon.addEventListener('click',()=>{
+  howToPlayModal.style.display='flex';
+})
+
+closeHowToPlayModal.addEventListener('click',()=>{
+  howToPlayModal.style.display='none';
+})

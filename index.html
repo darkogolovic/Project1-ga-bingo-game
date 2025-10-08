@@ -18,6 +18,59 @@
       <h1>Bingo Game 6/48</h1>
       <div><i class="fa-solid fa-circle-info info-icon"></i></div>
     </header>
+    <div class="modal-how-to-play" style="display: none;" >
+      <div class="modal-content">
+        <h2>🎮 How to Play</h2>
+          <p>
+            Welcome to the <strong>Lucky Draw Game!</strong> The goal is simple:
+            pick <strong>6 numbers</strong> and see if luck is on your side as the
+            machine draws random balls. Match all your numbers to win big!
+          </p>
+
+        <h3>🎟️ Game Rules</h3>
+        <ul>
+          <li>Select <strong>6 numbers</strong> from the number grid.</li>
+          <li>You can choose numbers manually, by color, or randomly.</li>
+          <li>Each number has a specific color — it helps identify patterns.</li>
+          <li>Once you select 6 numbers, the <strong>Start Game</strong> button becomes active.</li>
+          <li>The game will then draw up to <strong>35 random balls</strong>.</li>
+          <li>If your chosen numbers appear among the drawn balls, you win!</li>
+          <li>Each win has a multiplier that boosts your earnings.</li>
+        </ul>
+
+      <h3>💰 Betting System</h3>
+      <ul>
+        <li>Your starting balance is <strong>10💲</strong>.</li>
+        <li>Set your desired bet amount using the input field.</li>
+        <li>Click <strong>Set Amount</strong> to confirm your bet.</li>
+        <li>Your balance will decrease by the bet amount.</li>
+        <li>If you win, your prize = bet × multiplier.</li>
+        <li>You can reset your balance at any time with the <strong>Reset</strong> button.</li>
+      </ul>
+
+      <h3>🧩 Button Overview</h3>
+      <ul>
+        <li><strong>Start Game</strong> — begins the draw sequence of 35 random balls.</li>
+        <li><strong>Clear Selection</strong> — clears all selected numbers.</li>
+        <li><strong>Random Pick</strong> — selects 6 random numbers automatically.</li>
+        <li><strong>Pick by Color</strong> — selects numbers based on a chosen color.</li>
+        <li><strong>Set Amount</strong> — confirms your bet amount.</li>
+        <li><strong>Reset</strong> — resets your total balance to 10💲.</li>
+      </ul>
+
+      <h3>🏆 Winning</h3>
+      <p>
+        When all 6 of your selected numbers are drawn, you win according to the
+        multiplier shown in the <strong>balls holder</strong> section.
+      </p>
+      <p>
+        The winning multiplier increases based on how far into the draw the
+        match happens — later matches can yield higher multipliers!
+      </p>
+
+      <button id="close-how-to-play">Close</button>
+    </div>
+  </div>
 
     <main>
       <div class="modal-result">
@@ -38,7 +91,7 @@
           </ul>         
         </div>
         <button id="start-game" disabled>Start game</button>
-        <button>Reset</button>
+        <button id="reset-btn">Reset</button>
       </aside>
 
       <section class="main-content">

@@ -38,6 +38,60 @@ body{
    color: white;
    
 }
+.modal-how-to-play {
+  display: none;
+  width: 80%;
+  height: 70vh;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  background-color: rgba(102, 101, 101, 0.949);
+  font-size: 1.3rem;
+  font-weight: 500;
+  z-index: 5;
+  color: rgb(234, 229, 229);
+  border-radius: 20px;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.modal-how-to-play h2, 
+.modal-how-to-play h3 {
+  color: #ffb400;
+  margin-bottom: 10px;
+}
+
+.modal-how-to-play ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-how-to-play li {
+  margin-bottom: 5px;
+}
+
+.modal-how-to-play button {
+  align-self: center;
+  background: #ffb400;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+.modal-how-to-play button:hover {
+  background: #ffd85e;
+}
 .modal-result{
     display: none;
     width: 80%;
@@ -67,6 +121,10 @@ header{
     color: white;
    font-size: 2rem;
     
+}
+.info-icon:hover{
+    cursor: pointer;
+    transform: scale(1.5);
 }
 main{
     display: flex;
