@@ -205,8 +205,8 @@ function startGame() {
         clearInterval(drawing);
         endGame(winMultiplier);
       }
-    }, 100);
-  }, 200);
+    }, 600);
+  }, 1000);
 }
 
 function endGame(winMultiplier) {
