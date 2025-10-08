@@ -2,6 +2,7 @@
 import { multipliers } from "./multipliers.js";
 import { allBalls } from "./balls.js";
 
+
 //Elements selectors
 const infoIcon= document.querySelector('.info-icon');
 const howToPlayModal = document.querySelector('.modal-how-to-play');
@@ -29,12 +30,16 @@ const ticketLength = 6;
 const numbersToDraw = 35;
 const drawnNumbers = [];
 let winMultiplier = 0;
-let amount =10;
+let amount =localStorage.getItem('amount')|| 10;
 let betAmount = 0;
+
+
 
 
 //HTML generate
 betAmountInput.setAttribute('max',amount)
+amountElement.innerHTML = `${(parseFloat(amount)).toFixed(2)} 💲`
+
 
 multipliers.forEach((multiplier, index) => {
   let el = `
@@ -198,8 +203,8 @@ function startGame() {
         clearInterval(drawing);
         endGame(winMultiplier);
       }
-    }, 500);
-  }, 1000);
+    }, 200);
+  }, 500);
 }
 
 function endGame(winMultiplier) {
@@ -207,12 +212,13 @@ function endGame(winMultiplier) {
     setTimeout(()=>{
         modalResultElement.style.display='flex'
        if(winMultiplier){
-        resultElement.innerHTML= `You win ${win}💲`
+        resultElement.innerHTML= `🏆 You win ${win.toFixed(2)}💲`
         amount= amount + win;
         amountElement.innerHTML = `${amount.toFixed(2)}💲`;
+        localStorage.setItem('amount',amount)
         
     }else{
-        resultElement.innerHTML= 'You loose'
+        resultElement.innerHTML= 'You loose!!! 😒'
     }
     clearSelection()
 
@@ -233,6 +239,7 @@ function setBetAmount(){
   startGameBtn.removeAttribute('disabled')
   amount = amount - betAmount
   amountElement.innerHTML= `${amount.toFixed(2)}💲`;
+  localStorage.setItem('amount',amount)
   betAmountInput.setAttribute('disabled',true);
   setAmountButton.setAttribute('disabled',true);
   
@@ -243,6 +250,8 @@ function resetGame(){
   amount=10;
   amountElement.innerHTML= `${amount.toFixed(2)} 💲`
 }
+
+
 
 //Event listeners
 selectionNumbers.forEach((num) => {
