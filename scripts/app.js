@@ -251,6 +251,7 @@ function setBetAmount(){
 function resetGame(){
   amount=10;
   amountElement.innerHTML= `${amount.toFixed(2)} 💲`
+  localStorage.setItem('amount',amount)
 }
 
 
