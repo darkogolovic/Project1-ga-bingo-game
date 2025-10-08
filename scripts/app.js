@@ -91,7 +91,9 @@ function selectNumbers(e) {
     ticketElement.appendChild(liElement);
     e.target.classList.add(e.target.dataset.color);
     if (ticket.length === ticketLength) {
-      startGameBtn.removeAttribute("disabled");
+      betAmountInput.removeAttribute("disabled");
+      setAmountButton.removeAttribute('disabled')
+      
     }
   }
 }
@@ -203,8 +205,8 @@ function startGame() {
         clearInterval(drawing);
         endGame(winMultiplier);
       }
-    }, 600);
-  }, 1000);
+    }, 100);
+  }, 200);
 }
 
 function endGame(winMultiplier) {
