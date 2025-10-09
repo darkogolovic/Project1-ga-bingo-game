@@ -2,6 +2,23 @@
 import { multipliers } from "./multipliers.js";
 import { allBalls } from "./balls.js";
 
+
+function preloadImages() {
+  const images = [];
+  const basic = new Image();
+  basic.src = "images/Basic.png";
+  images.push(basic);
+
+  allBalls.forEach(ball => {
+    const img = new Image();
+    img.src = `images/${ball.image}`;
+    images.push(img);
+  });
+
+  return images;
+}
+preloadImages();
+
 // Element selectors
 const infoIcon = document.querySelector('.info-icon');
 const howToPlayModal = document.querySelector('.modal-how-to-play');
@@ -196,9 +213,9 @@ function startGame() {
     setTimeout(() => {
       mainBall.style.opacity = "0";
       mainBall.style.width = "0";
-    }, 2000);
+    }, 1000);
 
-    drawTimer = setTimeout(drawNext, 2500); 
+    drawTimer = setTimeout(drawNext, 1500); 
   }
 
   function finishDrawing() {
