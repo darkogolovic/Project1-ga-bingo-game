@@ -1,5 +1,5 @@
 # 🎱 Bingo 6/48 Game
-    ![Bingo Game](./game.png)
+![Bingo Game](./game.png)
 
 ## 🕹️ Getting Started
 - Welcome to the Lucky Draw Game! The goal is simple:
