@@ -192,13 +192,13 @@ function startGame() {
 
     drawCounter++;
 
-    // Fade-out glavne kugle
+   
     setTimeout(() => {
       mainBall.style.opacity = "0";
       mainBall.style.width = "0";
-    }, 500);
+    }, 1000);
 
-    drawTimer = setTimeout(drawNext, 800); // rekurzija
+    drawTimer = setTimeout(drawNext, 1500); 
   }
 
   function finishDrawing() {
