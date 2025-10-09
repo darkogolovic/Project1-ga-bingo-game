@@ -31,7 +31,7 @@
 ---
 
 ## 🎮 Playable Link
-Try it live here 👉 **[Bingo 6/48 Game](#)**  
+Try it live here 👉 **[Bingo 6/48 Game](https://bingo6of48.netlify.app/)**  
 
 ---
 
