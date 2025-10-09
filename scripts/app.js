@@ -196,9 +196,9 @@ function startGame() {
     setTimeout(() => {
       mainBall.style.opacity = "0";
       mainBall.style.width = "0";
-    }, 1000);
+    }, 2000);
 
-    drawTimer = setTimeout(drawNext, 1500); 
+    drawTimer = setTimeout(drawNext, 2500); 
   }
 
   function finishDrawing() {
