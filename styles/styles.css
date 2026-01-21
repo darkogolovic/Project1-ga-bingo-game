@@ -296,7 +296,7 @@ button:hover:not(:disabled) {
     border-radius: 50%;
     border: 1px solid white;
     overflow: hidden;
-    background-image: url(../images/bubanj.gif);
+    background-image: url(/images/bubanj.gif);
     background-size: cover;
     background-position: center;
     
