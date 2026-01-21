@@ -54,8 +54,16 @@ let drawTimer = null;
 
 
 // HTML generate
-betAmountInput.setAttribute('max', amount);
-amountElement.innerHTML = `${amount.toFixed(2)} 💲`;
+const updateBalanceUI = () => {
+  amountElement.innerHTML = `${amount.toFixed(2)}💲`;
+  betAmountInput.setAttribute('max', amount.toFixed(2));
+  const currentBet = parseFloat(betAmountInput.value);
+  if (!isNaN(currentBet) && currentBet > amount) {
+    betAmountInput.value = amount.toFixed(2);
+  }
+};
+
+updateBalanceUI();
 
 multipliers.forEach((multiplier, index) => {
   let el = `
@@ -86,46 +94,52 @@ colors.forEach(color => {
 // Ticket selection
 const selectionNumbers = document.querySelectorAll(".number");
 const pickByColorElements = document.querySelectorAll(".color");
+const numberElementByValue = new Map();
+selectionNumbers.forEach(num => {
+  numberElementByValue.set(parseInt(num.dataset.index), num);
+});
+
+function addNumberToTicket(number) {
+  if (isDrawing) return false;
+  if (ticket.length >= ticketLength) return false;
+  if (ticket.includes(number)) return false;
+  const el = numberElementByValue.get(number);
+  if (!el) return false;
+
+  ticket.push(number);
+  const li = document.createElement("li");
+  li.innerHTML = number;
+  ticketElement.appendChild(li);
+  el.classList.add(el.dataset.color);
+
+  if (ticket.length === ticketLength) {
+    betAmountInput.removeAttribute("disabled");
+    setAmountButton.removeAttribute('disabled');
+  }
+  return true;
+}
 
 function selectNumbers(e) {
-  if (ticket.length < ticketLength) {
-    ticket.push(parseInt(e.target.innerHTML));
-    let li = document.createElement("li");
-    li.innerHTML = e.target.innerHTML;
-    ticketElement.appendChild(li);
-    e.target.classList.add(e.target.dataset.color);
-    if (ticket.length === ticketLength) {
-      betAmountInput.removeAttribute("disabled");
-      setAmountButton.removeAttribute('disabled');
-    }
-  }
+  const value = parseInt(e.target.dataset.index || e.target.innerHTML);
+  addNumberToTicket(value);
 }
 
 function randomSelection() {
+  if (isDrawing) return;
   clearSelection();
-  for (let i = 0; i < ticketLength; i++) {
-    let selectedIndex = Math.floor(Math.random() * selectionNumbers.length);
-    let selectedNumber = selectionNumbers[selectedIndex];
-    ticket.push(selectedNumber.innerHTML);
-    let li = document.createElement("li");
-    li.innerHTML = selectedNumber.innerHTML;
-    ticketElement.appendChild(li);
-    selectedNumber.classList.add(selectedNumber.dataset.color);
+  const pool = allBalls.map(ball => ball.number);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  betAmountInput.removeAttribute("disabled");
-  setAmountButton.removeAttribute('disabled');
+  pool.slice(0, ticketLength).forEach(num => addNumberToTicket(num));
 }
 
 function selectByColor(e) {
+  if (isDrawing) return;
   selectionNumbers.forEach(num => {
     if (ticket.length < ticketLength && num.dataset.color === e.target.style.backgroundColor) {
-      num.classList.add(num.dataset.color);
-      ticket.push(num.innerHTML);
-      let li = document.createElement("li");
-      li.innerHTML = num.innerHTML;
-      ticketElement.appendChild(li);
-      betAmountInput.removeAttribute("disabled");
-      setAmountButton.removeAttribute('disabled');
+      addNumberToTicket(parseInt(num.dataset.index));
     }
   });
 }
@@ -137,21 +151,28 @@ function clearSelection() {
   selectionNumbers.forEach(num => num.classList.remove(num.dataset.color));
   ticketElement.textContent = "";
   startGameBtn.setAttribute("disabled", true);
+  betAmountShow.textContent = '';
 }
 
 //Setting bet amount
 function setBetAmount() {
+  if (ticket.length !== ticketLength) return;
   betAmount = parseFloat(betAmountInput.value);
+  if (!betAmount || betAmount <= 0) return;
+  if (betAmount > amount) {
+    alert('Bet exceeds available balance.');
+    return;
+  }
   startGameBtn.removeAttribute('disabled');
   amount -= betAmount;
-  amountElement.innerHTML = `${amount.toFixed(2)}💲`;
+  updateBalanceUI();
   localStorage.setItem('amount', amount);
   betAmountInput.setAttribute('disabled', true);
   setAmountButton.setAttribute('disabled', true);
-  betAmountShow.textContent= `Bet amount:  ${betAmountInput.value}💲`
-  resetBtn.setAttribute('disabled',true)
-  randomNumbersPick.setAttribute('disabled',true)
-  clearSelectionBtn.setAttribute('disabled',true)
+  betAmountShow.textContent= `Bet amount: ${betAmount.toFixed(2)}💲`;
+  resetBtn.setAttribute('disabled',true);
+  randomNumbersPick.setAttribute('disabled',true);
+  clearSelectionBtn.setAttribute('disabled',true);
 }
 
 const ballElementImages = document.querySelectorAll(".ball img"); 
@@ -159,6 +180,7 @@ const ballElementImages = document.querySelectorAll(".ball img");
 // Start game 
 function startGame() {
   if (isDrawing) return;
+  if (!betAmount) return;
   isDrawing = true;
   startGameBtn.setAttribute("disabled", true);
 
@@ -239,9 +261,9 @@ function endGame(winMultiplier) {
       resultElement.innerHTML = `🏆 You win ${win.toFixed(2)}💲`;
       amount += win;
     } else {
-      resultElement.innerHTML = 'You loose !!!😒';
+      resultElement.innerHTML = 'You lose 😒';
     }
-    amountElement.innerHTML = `${amount.toFixed(2)}💲`;
+    updateBalanceUI();
     localStorage.setItem('amount', amount);
     clearSelection();
   }, 1000);
@@ -255,6 +277,7 @@ function endGame(winMultiplier) {
     betAmountInput.removeAttribute('disabled');
     setAmountButton.removeAttribute('disabled');
     betAmountShow.textContent='';
+    betAmount = 0;
   }, 3000);
 }
 
@@ -265,12 +288,13 @@ function resetGame() {
   drawTimer = null;
   isDrawing = false;
   amount = 10;
-  amountElement.innerHTML = `${amount.toFixed(2)} 💲`;
+  updateBalanceUI();
   localStorage.setItem('amount', amount);
   clearSelection();
   betAmountInput.removeAttribute("disabled");
   setAmountButton.removeAttribute("disabled");
-  
+  betAmount = 0;
+  betAmountShow.textContent = '';
 }
 
 // Event listeners
